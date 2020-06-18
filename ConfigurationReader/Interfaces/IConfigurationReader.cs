@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ConfigurationReader
+namespace ConfigurationReader.Interfaces
 {
     public interface IConfigurationReader
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Configuration.Interfaces;
 using ConfigurationReader;
+using ConfigurationReader.Interfaces;
 
 namespace Configuration
 {
