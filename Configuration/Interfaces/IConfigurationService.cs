@@ -1,8 +1,8 @@
 ﻿
 namespace Configuration.Interfaces
 {
-    interface IConfigurationService
+    public interface IConfigurationService
     {
-        IConfiguration Configure();
+        T Configure<T>() where T : AbstractConfiguration, new();
     }
 }
