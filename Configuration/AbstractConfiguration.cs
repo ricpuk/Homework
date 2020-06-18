@@ -10,6 +10,10 @@ namespace Configuration
         public void SetValue(string key, string value)
         {
             var property = GetProperty(key);
+            if (property == null)
+            {
+                return;
+            }
             property.SetValue(this, Convert.ChangeType(value, property.PropertyType));
         }
 
