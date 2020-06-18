@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Configuration;
 
-namespace Configuration
+namespace Homework
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var configurationService = new ConfigurationService();
+            var config = configurationService.Configure<CustomConfig>();
         }
     }
 }

@@ -9,4 +9,17 @@
     <Folder Include="Config\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Configuration\Configuration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config\Base_Config.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Project_Config.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
