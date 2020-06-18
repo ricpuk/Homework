@@ -9,7 +9,8 @@ namespace Configuration
     {
         public void SetValue(string key, string value)
         {
-            GetProperty(key)?.SetValue(this, value);
+            var property = GetProperty(key);
+            property.SetValue(this, Convert.ChangeType(value, property.PropertyType));
         }
 
         public T GetValue<T>(string key)
