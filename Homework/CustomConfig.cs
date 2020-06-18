@@ -1,4 +1,5 @@
-﻿using Configuration;
+﻿using System;
+using Configuration;
 using Configuration.Interfaces;
 
 namespace Homework
@@ -7,10 +8,10 @@ namespace Homework
     {
         public string Name { get; set; }
         public string PowerSupply { get; set; }
-        public string OrdersPerHour { get; set; }
-        public string OrderLinesPerOrder { get; set; }
+        public int OrdersPerHour { get; set; }
+        public int OrderLinesPerOrder { get; set; }
         public string InboundStrategy { get; set; }
-        public string ResultStartTime { get; set; }
-        public string ResultInterval { get; set; }
+        public DateTime ResultStartTime { get; set; }
+        public int ResultInterval { get; set; }
     }
 }
