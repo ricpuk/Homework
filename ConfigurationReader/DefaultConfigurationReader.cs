@@ -10,6 +10,22 @@ namespace ConfigurationReader
     {
         private readonly string _configDirectory = $"{Environment.CurrentDirectory}/Config";
 
+        public DefaultConfigurationReader()
+        {
+            
+        }
+
+        public DefaultConfigurationReader(string dir)
+        {
+            _configDirectory = dir;
+        }
+
+        /// <summary>
+        /// Base implementation of Read logic. This is file specific and should be overriden
+        /// when creating a derived reader for different file structures
+        /// </summary>
+        /// <param name="file">filename to read</param>
+        /// <returns>List of read configurations</returns>
         public List<ConfigurationEntry> ReadFromFile(string file)
         {
             var filePath = $"{_configDirectory}/{file}";
