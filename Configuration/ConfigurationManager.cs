@@ -13,7 +13,7 @@ namespace Configuration
         /// <summary>
         /// ConfigurationReader - contains specific logic to parse configuration files
         /// </summary>
-        private static readonly IConfigurationReader ConfigReader = new DefaultConfigurationReader();
+        private static IConfigurationReader ConfigReader = new DefaultConfigurationReader();
 
         /// <summary>
         /// Currently loaded configuration params
@@ -23,6 +23,15 @@ namespace Configuration
         static ConfigurationManager()
         {
 
+        }
+
+        /// <summary>
+        /// Default configuration reader
+        /// </summary>
+        /// <param name="reader">Reader to use</param>
+        public static void SetDefaultConfigurationReader(IConfigurationReader reader)
+        {
+            ConfigReader = reader;
         }
 
         /// <summary>
