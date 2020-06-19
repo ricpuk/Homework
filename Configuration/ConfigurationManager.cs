@@ -13,7 +13,7 @@ namespace Configuration
         /// <summary>
         /// ConfigurationReader - contains specific logic to parse configuration files
         /// </summary>
-        private static IConfigurationReader ConfigReader = new DefaultConfigurationReader();
+        private static IConfigurationReader _configReader = new DefaultConfigurationReader();
 
         /// <summary>
         /// Currently loaded configuration params
@@ -31,7 +31,7 @@ namespace Configuration
         /// <param name="reader">Reader to use</param>
         public static void SetDefaultConfigurationReader(IConfigurationReader reader)
         {
-            ConfigReader = reader;
+            _configReader = reader;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Configuration
         /// <param name="file">file name to read</param>
         public static void AddConfiguration(string file)
         {
-            _configEntries = _configEntries.Concat(ConfigReader.ReadFromFile(file)).ToList();
+            _configEntries = _configEntries.Concat(_configReader.ReadFromFile(file)).ToList();
         }
 
         /// <summary>
@@ -70,14 +70,19 @@ namespace Configuration
         /// <returns>Configured variable casted to type</returns>
         static T GetValue<T>(string key)
         {
-            var entry = _configEntries.SingleOrDefault(x => string.Equals(x.Key, key, StringComparison.CurrentCultureIgnoreCase));
-            //Treat as configuration error if entry does not exist
-            if (entry == null)
-            {
-                throw new ConfigurationException();
-            }
+            var entry = TryGetEntry(key);
             //Cast to required value type
             return ValueConverter.ConvertTo<T>(entry.Value);
+        }
+
+        /// <summary>
+        /// Gets configured value as string
+        /// </summary>
+        /// <param name="key">configuration entry name</param>
+        /// <returns>value as string</returns>
+        static string GetValueAsString(string key)
+        { 
+            return TryGetEntry(key).Value;
         }
 
         /// <summary>
@@ -87,6 +92,23 @@ namespace Configuration
         static List<ConfigurationEntry> GetAll()
         {
             return _configEntries;
+        }
+
+        /// <summary>
+        /// Gets Configuration entry by key
+        /// </summary>
+        /// <param name="key">key to get</param>
+        /// <returns>Configuration entry</returns>
+        private static ConfigurationEntry TryGetEntry(string key)
+        {
+            var entry = _configEntries.SingleOrDefault(x => string.Equals(x.Key, key, StringComparison.CurrentCultureIgnoreCase));
+            //Treat as configuration error if entry does not exist
+            if (entry == null)
+            {
+                throw new ConfigurationException();
+            }
+
+            return entry;
         }
     }
 }
