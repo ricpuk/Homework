@@ -10,7 +10,14 @@ namespace Configuration
 {
     public static class ConfigurationManager
     {
+        /// <summary>
+        /// ConfigurationReader - contains specific logic to parse configuration files
+        /// </summary>
         private static readonly IConfigurationReader ConfigReader = new DefaultConfigurationReader();
+
+        /// <summary>
+        /// Currently loaded configuration params
+        /// </summary>
         private static List<ConfigurationEntry> _configEntries = new List<ConfigurationEntry>();
 
         static ConfigurationManager()
@@ -18,11 +25,21 @@ namespace Configuration
 
         }
 
+        /// <summary>
+        /// Reads entries in the specified configuration file
+        /// concatenates with existing _configEntries list
+        /// </summary>
+        /// <param name="file">file name to read</param>
         public static void AddConfiguration(string file)
         {
             _configEntries = _configEntries.Concat(ConfigReader.ReadFromFile(file)).ToList();
         }
 
+        /// <summary>
+        /// Configures the provided model with values available.
+        /// </summary>
+        /// <typeparam name="T">Model to configure</typeparam>
+        /// <returns>Instance of configured model</returns>
         public static T Configure<T>() where T : AbstractConfiguration, new()
         {
             
@@ -36,6 +53,12 @@ namespace Configuration
             return config;
         }
 
+        /// <summary>
+        /// Get Value by key and type
+        /// </summary>
+        /// <typeparam name="T">Requested variable type</typeparam>
+        /// <param name="key">Requested variable name(key)</param>
+        /// <returns>Configured variable casted to type</returns>
         static T GetValue<T>(string key)
         {
             var entry = _configEntries.SingleOrDefault(x => string.Equals(x.Key, key, StringComparison.CurrentCultureIgnoreCase));
@@ -44,9 +67,14 @@ namespace Configuration
             {
                 throw new ConfigurationException();
             }
+            //Cast to required value type
             return ValueConverter.ConvertTo<T>(entry.Value);
         }
 
+        /// <summary>
+        /// Gets currently read configuration entries
+        /// </summary>
+        /// <returns>A list of currently configured values</returns>
         static List<ConfigurationEntry> GetAll()
         {
             return _configEntries;
