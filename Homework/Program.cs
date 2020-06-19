@@ -1,4 +1,5 @@
-﻿using Configuration;
+﻿using System.Security.Authentication;
+using Configuration;
 
 namespace Homework
 {
@@ -7,10 +8,13 @@ namespace Homework
 
         static void Main(string[] args)
         {
-            var configurationService = new ConfigurationService();
-            configurationService.AddConfigurationFile("Base_Config.txt");
-            configurationService.AddConfigurationFile("Project_Config.txt");
-            var config = configurationService.Configure<CustomConfig>();
+            //Load configuration files
+            ConfigurationManager.AddConfiguration("Global_Config_Standard.txt");
+            ConfigurationManager.AddConfiguration("Global_Config_ProjectSpecific.txt");
+            ConfigurationManager.AddConfiguration("Global_Config_ExperimentSpecifix.txt");
+
+            //Configure custom model
+            var config = ConfigurationManager.Configure<CustomConfig>();
         }
     }
 }

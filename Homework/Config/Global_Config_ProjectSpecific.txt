@@ -1,0 +1,2 @@
+﻿OrdersPerHour:	3000
+ResultStartTime:	00:00:00

@@ -6,15 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Config\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Configuration\Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Config\Base_Config.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Global_Config_ExperimentSpecifix.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Global_Config_ProjectSpecific.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Global_Config_Standard.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Config\Project_Config.txt">

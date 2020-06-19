@@ -1,0 +1,2 @@
+﻿NumberOfSystems:	5
+ResultStartTime:	01:00:00
