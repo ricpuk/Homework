@@ -1,6 +1,5 @@
 ﻿using System;
 using Configuration;
-using Configuration.Interfaces;
 
 namespace Homework
 {
