@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Configuration.Helpers;
@@ -41,7 +40,19 @@ namespace Configuration
         /// <param name="file">file name to read</param>
         public static void AddConfiguration(string file)
         {
-            _configEntries = _configEntries.Concat(_configReader.ReadFromFile(file)).ToList();
+            var readEntries = _configReader.ReadFromFile(file);
+            foreach (var entry in readEntries)
+            {
+                var existingEntry = _configEntries.FirstOrDefault(x => x.Key == entry.Key);
+                if (existingEntry != null)
+                {
+                    existingEntry.Value = entry.Value;
+                }
+                else
+                {
+                    _configEntries.Add(entry);
+                }
+            }
         }
 
         /// <summary>
@@ -68,7 +79,7 @@ namespace Configuration
         /// <typeparam name="T">Requested variable type</typeparam>
         /// <param name="key">Requested variable name(key)</param>
         /// <returns>Configured variable casted to type</returns>
-        static T GetValue<T>(string key)
+        public static T GetValue<T>(string key)
         {
             var entry = TryGetEntry(key);
             //Cast to required value type
@@ -80,16 +91,23 @@ namespace Configuration
         /// </summary>
         /// <param name="key">configuration entry name</param>
         /// <returns>value as string</returns>
-        static string GetValueAsString(string key)
-        { 
-            return TryGetEntry(key).Value;
+        public static string GetValueAsString(string key)
+        {
+            try
+            {
+                return TryGetEntry(key).Value;
+            }
+            catch (Exception)
+            {
+                return "Error";
+            }
         }
 
         /// <summary>
         /// Gets currently read configuration entries
         /// </summary>
         /// <returns>A list of currently configured values</returns>
-        static List<ConfigurationEntry> GetAll()
+        public static List<ConfigurationEntry> GetAll()
         {
             return _configEntries;
         }
